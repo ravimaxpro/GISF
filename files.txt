@@ -1,0 +1,124 @@
+Git Reposotory import and export from pycharm
+==============================================
+1) From the main menu, choose VCS | Checkout from Version Control | Git.
+
+2) In the Clone Repository dialog, specify the URL of the repository that you want to clone. You can select a repository from the list of all GitHub projects 
+associated with your account and the organization that your account belongs to.
+
+3) In the Directory field, enter the path to the folder where your local Git repository will be created.
+
+4) Click Clone. If you want to create a project based on these sources, click Yes in the confirmation dialog. PyCharm will automatically set Git root mapping to the project root directory.
+
+git clone https://github.com/pythonvenu/GISF.git
+cd GISF
+git status
+-- add changes (add new fiels and modify fiels)
+git branch venuChildBranch
+
+git checkout venuChildBranch
+
+git add *
+
+
+git config --global user.email "pythonvenu@gmail.com"
+git config --global user.name "pythonvenu"
+
+git commit -m
+
+git push origin venuChildBranch
+
+Jenkins Installation
+====================
+
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk -y
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo apt-add-repository "deb https://pkg.jenkins.io/debian-stable binary/"
+sudo apt-get update
+sudo apt install jenkins -y
+sudo apt-get install git -y
+sudo apt-get install maven -y
+sudo service jenkins start
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+5708b285666b4ab1b242f5b3fb62b17c
+
+https://github.com/pythonvenu/GISF.git
+
+
+Virtural Environment Creation
+=============================
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install apache2 -y
+sudo apt-get install python3-pip -y
+sudo apt-get install libapache2-mod-wsgi-py3 -y
+sudo pip3 install virtualenv
+sudo apt install python-pip
+sudo apt-get install python3
+#rm -rf ~/GI
+sudo mv /var/lib/jenkins/workspace/GISF /home/ubuntu/
+sudo chmod 777 -R /home/ubuntu/GISF/
+cd /home/ubuntu/GISF
+virtualenv myprojectenv
+source ~/GISF/myprojectenv/bin/activate
+pip3 install django
+sudo apt install python-dateutil
+pip3 install requests
+python manage.py collectstatic
+http://3.15.203.86:8000/
+
+
+deactivate
+
+
+sudo mv 000-default.conf /etc/apache2/sites-available/
+sudo service apache2 restart
+
+
+000-default.conf
+=================
+<VirtualHost *:80>
+
+ServerAdmin http://ec2-3-15-203-86.us-east-2.compute.amazonaws.com/
+DocumentRoot /home/ubuntu/GISF
+Alias /static /home/ubuntu/GISF/static
+<Directory /home/ubuntu/GISF/static>
+	Require all granted
+</Directory>
+
+<Directory /home/ubuntu/GISF/GISF>
+	<Files wsgi.py>
+		Require all granted
+	</Files>
+</Directory>
+
+WSGIDaemonProcess GISF python-home=/home/ubuntu/GISF/myprojectenv python-path=/home/ubuntu/GISF
+WSGIProcessGroup GISF
+WSGIScriptAlias / /home/ubuntu/GISF/GISF/wsgi.py
+
+</VirtualHost>
+
+
+
+chmod 664 ~/db.GISF
+
+chmod 775 ~/myproject
+
+sudo chown :www-data ~/myproject/db.GISF
+
+sudo chown :www-data ~/myproject
+
+sudo ufw delete allow 8000
+
+sudo ufw allow 'Apache Full'
+
+sudo iptables -D INPUT -p tcp --dport 8000 -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+
+sudo apache2ctl configtest
+
+sudo systemctl restart apache2
