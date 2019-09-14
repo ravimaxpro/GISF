@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+<body class="container">
+{% block contant %}
+<h1> This Product Raw  Create Page</h1>
+
+<form action=' ' method='POST'> {% csrf_token %}
+    <div class="row">
+        <div>
+    <input type="text" name ="title" placeholder="your title" /> <br>
+    <input type="text" name ="description" placeholder="Description" /> <br>
+    <input type="number" name ="price" placeholder="Price" />
+    <input type='submit' value='save' >
+        </div>
+    </div>
+</form>
+{% endblock %}
+</body>

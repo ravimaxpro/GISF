@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1> This Product Create Page</h1>
+<form method="POST">
+    {% for instance in obj %}
+    {{ instance.name}}
+<img class="imgSqrWithBorder" src="/media/{{ instance.photo }}" alt="Car"><br>
+{% endfor %}
+{% endblock %}

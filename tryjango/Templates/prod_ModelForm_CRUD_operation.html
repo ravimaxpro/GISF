@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>The Product ModelForm Page</h1>
+<div>
+    <form>
+        <input type="text" name="sid" placeholder="enter the id you want to edit"/><br>
+        <input type="submit" name="search" value="search">
+        {{message}}
+    </form>
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="number" name="calcTEST" value={{ calcvalue }} readonly/><br>
+        {% if OperationAllowed != 'UD' %}
+        <input type="Submit" name="Create" value="Create">
+        <input type="Submit" name="calc" value="calc">
+        {% else %}
+        <input type="Submit" name="Update" value="Update">
+        <input type="Submit" name="Delete" value="Delete">
+        {% endif %}
+        {{pmessage}}
+
+    </form>
+</div>
+ {%  endblock %}
